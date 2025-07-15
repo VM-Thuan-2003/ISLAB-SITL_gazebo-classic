@@ -1,0 +1,46 @@
+<sdf version='1.5'>
+  <model name='islab_camera'>
+    <include>
+      <uri>model://islab</uri>
+    </include>
+
+    <!--down camera-->
+    <include>
+      <uri>model://down_camera</uri>
+      <pose>0 0 -0.03 0 0 0</pose>
+      <name>camera0</name>
+    </include>
+
+    <joint name='camera0_joint' type='fixed'>
+      <child>camera0::link</child>
+      <parent>islab::base_link</parent>
+    </joint>
+
+    <!--forward camera-->
+    <include>
+      <uri>model://forward_camera</uri>
+      <pose>0.1 0 0 0 0.174533 0</pose> <!-- 10 degrees in radians -->
+      <name>camera1</name>
+    </include>
+
+    <joint name='camera1_joint' type='fixed'>
+      <child>camera1::link</child>
+      <parent>islab::base_link</parent>
+    </joint>
+
+    <!--uwb-->
+    <!-- <include>
+      <uri>model://uwb</uri>
+      <pose>0.05 0 -0.05 0 0 0</pose>
+      <name>uwb0</name>
+    </include>
+
+    <joint name='uwb0_joint' type='fixed'>
+      <child>uwb0::link</child>
+      <parent>islab::base_link</parent>
+    </joint> -->
+
+  </model>
+</sdf>
+
+<!-- vim: set et ft=xml fenc=utf-8 ff=unix sts=0 sw=2 ts=2 : -->

@@ -1,0 +1,146 @@
+<sdf version='1.5'>
+  <model name='islab_balls'>
+
+    <!-- Include drone model -->
+    <include>
+      <uri>model://islab</uri>
+    </include>
+
+    <!-- Ball model template -->
+    <model name="ball_1">
+      <pose>-0.2 0 0.25 0 0 0</pose>
+      <static>false</static>
+      <link name="link">
+        <inertial><mass>0.057</mass></inertial>
+        <collision name="collision">
+          <geometry><sphere><radius>0.0335</radius></sphere></geometry>
+          <surface>
+            <bounce><restitution_coefficient>0.0</restitution_coefficient><threshold>0.0</threshold></bounce>
+            <friction><ode><mu>1.0</mu><mu2>1.0</mu2></ode></friction>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name="visual">
+          <geometry><sphere><radius>0.0335</radius></sphere></geometry>
+          <material><ambient>1 0 0 1</ambient></material>
+        </visual>
+        <velocity_decay><linear>0.9</linear><angular>0.9</angular></velocity_decay>
+      </link>
+    </model>
+
+    <model name="ball_2">
+      <pose>-0.1 0 0.25 0 0 0</pose>
+      <static>false</static>
+      <link name="link">
+        <inertial><mass>0.057</mass></inertial>
+        <collision name="collision">
+          <geometry><sphere><radius>0.0335</radius></sphere></geometry>
+          <surface>
+            <bounce><restitution_coefficient>0.0</restitution_coefficient><threshold>0.0</threshold></bounce>
+            <friction><ode><mu>1.0</mu><mu2>1.0</mu2></ode></friction>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name="visual">
+          <geometry><sphere><radius>0.0335</radius></sphere></geometry>
+          <material><ambient>0 1 0 1</ambient></material>
+        </visual>
+        <velocity_decay><linear>0.9</linear><angular>0.9</angular></velocity_decay>
+      </link>
+    </model>
+
+    <model name="ball_3">
+      <pose>0.0 0 0.25 0 0 0</pose>
+      <static>false</static>
+      <link name="link">
+        <inertial><mass>0.057</mass></inertial>
+        <collision name="collision">
+          <geometry><sphere><radius>0.0335</radius></sphere></geometry>
+          <surface>
+            <bounce><restitution_coefficient>0.0</restitution_coefficient><threshold>0.0</threshold></bounce>
+            <friction><ode><mu>1.0</mu><mu2>1.0</mu2></ode></friction>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name="visual">
+          <geometry><sphere><radius>0.0335</radius></sphere></geometry>
+          <material><ambient>0 0 1 1</ambient></material>
+        </visual>
+        <velocity_decay><linear>0.9</linear><angular>0.9</angular></velocity_decay>
+      </link>
+    </model>
+
+    <model name="ball_4">
+      <pose>0.1 0 0.25 0 0 0</pose>
+      <static>false</static>
+      <link name="link">
+        <inertial><mass>0.057</mass></inertial>
+        <collision name="collision">
+          <geometry><sphere><radius>0.0335</radius></sphere></geometry>
+          <surface>
+            <bounce><restitution_coefficient>0.0</restitution_coefficient><threshold>0.0</threshold></bounce>
+            <friction><ode><mu>1.0</mu><mu2>1.0</mu2></ode></friction>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name="visual">
+          <geometry><sphere><radius>0.0335</radius></sphere></geometry>
+          <material><ambient>1 1 0 1</ambient></material>
+        </visual>
+        <velocity_decay><linear>0.9</linear><angular>0.9</angular></velocity_decay>
+      </link>
+    </model>
+
+    <model name="ball_5">
+      <pose>0.2 0 0.25 0 0 0</pose>
+      <static>false</static>
+      <link name="link">
+        <inertial><mass>0.057</mass></inertial>
+        <collision name="collision">
+          <geometry><sphere><radius>0.0335</radius></sphere></geometry>
+          <surface>
+            <bounce><restitution_coefficient>0.0</restitution_coefficient><threshold>0.0</threshold></bounce>
+            <friction><ode><mu>1.0</mu><mu2>1.0</mu2></ode></friction>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name="visual">
+          <geometry><sphere><radius>0.0335</radius></sphere></geometry>
+          <material><ambient>1 0 1 1</ambient></material>
+        </visual>
+        <velocity_decay><linear>0.9</linear><angular>0.9</angular></velocity_decay>
+      </link>
+    </model>
+
+    <!-- Fixed joints to hold the balls -->
+    <joint name="ball_joint_1" type="fixed">
+      <parent>islab::base_link</parent>
+      <child>ball_1::link</child>
+    </joint>
+
+    <joint name="ball_joint_2" type="fixed">
+      <parent>islab::base_link</parent>
+      <child>ball_2::link</child>
+    </joint>
+
+    <joint name="ball_joint_3" type="fixed">
+      <parent>islab::base_link</parent>
+      <child>ball_3::link</child>
+    </joint>
+
+    <joint name="ball_joint_4" type="fixed">
+      <parent>islab::base_link</parent>
+      <child>ball_4::link</child>
+    </joint>
+
+    <joint name="ball_joint_5" type="fixed">
+      <parent>islab::base_link</parent>
+      <child>ball_5::link</child>
+    </joint>
+
+    <!-- ROS plugins -->
+    <plugin name="gazebo_ros_init" filename="libgazebo_ros_init.so"/>
+    <plugin name="gazebo_ros_factory" filename="libgazebo_ros_factory.so"/>
+
+  </model>
+</sdf>
