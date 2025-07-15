@@ -1,0 +1,32 @@
+<?xml version="1.6" ?>
+<sdf version="1.6">
+  <model name="home_marker">
+    <static>true</static>
+    <link name="link">
+      <pose>0 0 0 0 0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <plane>
+            <normal>0 0 1</normal>
+            <size>1.2 1.2</size>
+          </plane>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <plane>
+            <normal>0 0 1</normal>
+            <size>1.2 1.2</size>
+          </plane>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://home_marker/materials/scripts</uri>
+            <uri>model://home_marker/materials/textures</uri>
+            <name>home_marker/material</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>

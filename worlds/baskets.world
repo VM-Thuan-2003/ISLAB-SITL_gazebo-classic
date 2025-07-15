@@ -1,0 +1,260 @@
+<sdf version="1.7">
+  <world name="drop_field">
+
+    <!-- Sunlight -->
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <!-- Black Base Field -->
+    <model name="main_field">
+      <static>true</static>
+      <pose>5.5 11.5 0.005 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>11 23 0.01</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>11 23 0.01</size></box></geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Black</name>
+            </script>
+            <ambient>0.05 0.05 0.05 1</ambient>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- === SAFETY BORDERS (aligned to main field edges, width: 2m, height: 0.1m) === -->
+
+    <!-- Top Border (Y direction) -->
+    <model name="safety_border_top">
+      <static>true</static>
+      <pose>5.5 24.0 0.05 0 0 0</pose> <!-- center Y = 23 + 1 -->
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>11 2 0.1</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>11 2 0.1</size></box></geometry>
+          <material><script><name>Gazebo/White</name></script></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Bottom Border (Y direction) -->
+    <model name="safety_border_bottom">
+      <static>true</static>
+      <pose>5.5 -1.0 0.05 0 0 0</pose> <!-- center Y = 0 - 1 -->
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>11 2 0.1</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>11 2 0.1</size></box></geometry>
+          <material><script><name>Gazebo/White</name></script></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Left Border (X direction) -->
+    <model name="safety_border_left">
+      <static>true</static>
+      <pose>-1.0 11.5 0.05 0 0 0</pose> <!-- center X = 0 - 1 -->
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>2 23 0.1</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>2 23 0.1</size></box></geometry>
+          <material><script><name>Gazebo/White</name></script></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Right Border (X direction) -->
+    <model name="safety_border_right">
+      <static>true</static>
+      <pose>12.0 11.5 0.05 0 0 0</pose> <!-- center X = 11 + 1 -->
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>2 23 0.1</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>2 23 0.1</size></box></geometry>
+          <material><script><name>Gazebo/White</name></script></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- === H Zones as Home Markers (1.2 x 1.2 x 0.1 m) === -->
+    <include>
+      <uri>model://home_marker</uri>
+      <name>home_left</name>
+      <pose>0.6 0.6 0.05 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://home_marker</uri>
+      <name>home_center</name>
+      <pose>5.5 0.6 0.05 0 0 0</pose>
+    </include>
+
+    <include>
+      <uri>model://home_marker</uri>
+      <name>home_right</name>
+      <pose>10.4 0.6 0.05 0 0 0</pose>
+    </include>
+
+    <!-- Line from Home Center to Target Yellow Middle -->
+    <model name="home_to_yellow_middle_line">
+      <static>true</static>
+      <!-- Midpoint: x = 5.5, y = (0.6 + 3.5) / 2 = 2.05, z = 0.025 (half of 5cm) -->
+      <pose>5.5 2.05 0.025 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.5 2.9 0.05</size> <!-- width, length, height -->
+            </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>0.5 2.9 0.05</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient> <!-- Gray -->
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- White line from home_center (5.5, 0.6) to target_yellow_middle (5.5, 3.5) -->
+    <model name="home_center_to_yellow_middle">
+      <static>true</static>
+      <!-- Midpoint pose, no rotation needed (vertical) -->
+      <pose>5.5 2.05 0.025 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <!-- width=0.5m, length=2.9m, thickness=0.05m -->
+            <box><size>0.5 2.9 0.05</size></box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box><size>0.5 2.9 0.05</size></box>
+          </geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- === TARGET ZONES === -->
+    <model name="target_blue">
+      <static>true</static>
+      <pose>5.5 19.0 0.05 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><cylinder><radius>0.175</radius><length>0.1</length></cylinder></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><cylinder><radius>0.175</radius><length>0.1</length></cylinder></geometry>
+          <material>
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="target_red_left">
+      <static>true</static>
+      <pose>2.5 15.0 0.05 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><cylinder><radius>0.25</radius><length>0.1</length></cylinder></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><cylinder><radius>0.25</radius><length>0.1</length></cylinder></geometry>
+          <material>
+            <ambient>0.99 0.16 0.11 1</ambient>
+            <diffuse>0.99 0.16 0.11 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="target_yellow_top">
+      <static>true</static>
+      <pose>5.5 15.0 0.05 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><cylinder><radius>0.5</radius><length>0.1</length></cylinder></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><cylinder><radius>0.5</radius><length>0.1</length></cylinder></geometry>
+          <material>
+            <ambient>0.98 1.0 0.22 1</ambient>
+            <diffuse>0.98 1.0 0.22 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="target_red_right">
+      <static>true</static>
+      <pose>8.5 15.0 0.05 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><cylinder><radius>0.25</radius><length>0.1</length></cylinder></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><cylinder><radius>0.25</radius><length>0.1</length></cylinder></geometry>
+          <material>
+            <ambient>0.99 0.16 0.11 1</ambient>
+            <diffuse>0.99 0.16 0.11 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="target_yellow_middle">
+      <static>true</static>
+      <pose>5.5 3.5 0.05 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><cylinder><radius>0.5</radius><length>0.1</length></cylinder></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><cylinder><radius>0.5</radius><length>0.1</length></cylinder></geometry>
+          <material>
+            <ambient>0.98 1.0 0.22 1</ambient>
+            <diffuse>0.98 1.0 0.22 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- ROS 2 plugins -->
+    <plugin name="gazebo_ros" filename="libgazebo_ros_init.so">
+      <ros>
+        <namespace>/gazebo</namespace>
+        <argument>--ros-args</argument>
+      </ros>
+    </plugin>
+
+    <plugin name="factory" filename="libgazebo_ros_factory.so"/>
+    <plugin name="gazebo_ros_init" filename="libgazebo_ros_init.so"/>
+    <plugin name="gazebo_ros_factory" filename="libgazebo_ros_factory.so"/>
+  </world>
+</sdf>

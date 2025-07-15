@@ -1,0 +1,10 @@
+<sdf version='1.5'>
+  <model name='islab_contest'>
+    <include>
+      <uri>model://islab_camera</uri>
+      <pose>0.5 5.5 0 0 0 0</pose>
+    </include>
+  </model>
+</sdf>
+
+<!-- vim: set et ft=xml fenc=utf-8 ff=unix sts=0 sw=2 ts=2 : -->

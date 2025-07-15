@@ -1,0 +1,316 @@
+<sdf version="1.7">
+  <world name="drone_delivery_field">
+    <!-- Add sunlight to the world -->
+
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <model name="top_camera">
+      <static>true</static>
+      <!-- Camera is placed at (x=9, y=6, z=10), looking straight down -->
+      <pose>9 6 10 0 1.57 0</pose>
+      <link name="link">
+        <sensor name="top_camera_sensor" type="camera">
+          <pose>0 0 0 0 0 0</pose>
+          <camera>
+            <!-- Horizontal field of view: 120 degrees in radians -->
+            <horizontal_fov>2.094</horizontal_fov>
+            <image>
+              <width>1280</width>
+              <height>720</height>
+              <format>R8G8B8</format>
+            </image>
+            <clip>
+              <near>0.1</near>
+              <far>100</far>
+            </clip>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="gazebo_ros_camera" filename="libgazebo_ros_camera.so">
+            <ros_namespace>/UAV</ros_namespace>
+            <camera_name>top_camera</camera_name>
+            <image_topic_name>top_view/image_raw</image_topic_name>
+            <camera_info_topic_name>top_view/camera_info</camera_info_topic_name>
+            <frame_name>top_camera_link</frame_name>
+          </plugin>
+        </sensor>
+      </link>
+    </model>
+
+    <!-- Bottom Right (0, 0) -->
+    <model name="corner_camera_br">
+      <static>true</static>
+      <pose>0 0 5 0 1.1 2.356</pose> <!-- ~135° yaw -->
+      <link name="link">
+        <sensor name="camera_sensor_br" type="camera">
+          <pose>0 0 0 0 0 0</pose>
+          <camera>
+            <horizontal_fov>2.094</horizontal_fov>
+            <image><width>640</width><height>480</height><format>R8G8B8</format></image>
+            <clip><near>0.1</near><far>100</far></clip>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="gazebo_ros_camera_br" filename="libgazebo_ros_camera.so">
+            <ros_namespace>/UAV</ros_namespace>
+            <camera_name>camera_br</camera_name>
+            <image_topic_name>corner/br/image_raw</image_topic_name>
+            <camera_info_topic_name>corner/br/camera_info</camera_info_topic_name>
+            <frame_name>corner_camera_br</frame_name>
+            <node_name>camera_node_br</node_name>
+          </plugin>
+        </sensor>
+      </link>
+    </model>
+
+    <!-- Bottom Left (0, 12) -->
+    <model name="corner_camera_bl">
+      <static>true</static>
+      <pose>0 12 5 0 1.1 0.785</pose> <!-- ~45° yaw -->
+      <link name="link">
+        <sensor name="camera_sensor_bl" type="camera">
+          <pose>0 0 0 0 0 0</pose>
+          <camera>
+            <horizontal_fov>2.094</horizontal_fov>
+            <image><width>640</width><height>480</height><format>R8G8B8</format></image>
+            <clip><near>0.1</near><far>100</far></clip>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="gazebo_ros_camera_bl" filename="libgazebo_ros_camera.so">
+            <ros_namespace>/UAV</ros_namespace>
+            <camera_name>camera_bl</camera_name>
+            <image_topic_name>corner/bl/image_raw</image_topic_name>
+            <camera_info_topic_name>corner/bl/camera_info</camera_info_topic_name>
+            <frame_name>corner_camera_bl</frame_name>
+            <node_name>camera_node_bl</node_name>
+          </plugin>
+        </sensor>
+      </link>
+    </model>
+
+    <!-- Top Right (18, 0) -->
+    <model name="corner_camera_tr">
+      <static>true</static>
+      <pose>18 0 5 0 1.1 -2.356</pose> <!-- ~-135° yaw -->
+      <link name="link">
+        <sensor name="camera_sensor_tr" type="camera">
+          <pose>0 0 0 0 0 0</pose>
+          <camera>
+            <horizontal_fov>2.094</horizontal_fov>
+            <image><width>640</width><height>480</height><format>R8G8B8</format></image>
+            <clip><near>0.1</near><far>100</far></clip>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="gazebo_ros_camera_tr" filename="libgazebo_ros_camera.so">
+            <ros_namespace>/UAV</ros_namespace>
+            <camera_name>camera_tr</camera_name>
+            <image_topic_name>corner/tr/image_raw</image_topic_name>
+            <camera_info_topic_name>corner/tr/camera_info</camera_info_topic_name>
+            <frame_name>corner_camera_tr</frame_name>
+            <node_name>camera_node_tr</node_name>
+          </plugin>
+        </sensor>
+      </link>
+    </model>
+
+    <!-- Top Left (18, 12) -->
+    <model name="corner_camera_tl">
+      <static>true</static>
+      <pose>18 12 5 0 1.1 -0.785</pose> <!-- ~-45° yaw -->
+      <link name="link">
+        <sensor name="camera_sensor_tl" type="camera">
+          <pose>0 0 0 0 0 0</pose>
+          <camera>
+            <horizontal_fov>2.094</horizontal_fov>
+            <image><width>640</width><height>480</height><format>R8G8B8</format></image>
+            <clip><near>0.1</near><far>100</far></clip>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>
+          <plugin name="gazebo_ros_camera_tl" filename="libgazebo_ros_camera.so">
+            <ros_namespace>/UAV</ros_namespace>
+            <camera_name>camera_tl</camera_name>
+            <image_topic_name>corner/tl/image_raw</image_topic_name>
+            <camera_info_topic_name>corner/tl/camera_info</camera_info_topic_name>
+            <frame_name>corner_camera_tl</frame_name>
+            <node_name>camera_node_tl</node_name>
+          </plugin>
+        </sensor>
+      </link>
+    </model>
+
+    <!-- Main green field (18m x 12m) -->
+    <model name="main_field">
+      <static>true</static>
+      <pose>9 6 0.005 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>18 12 0.01</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>18 12 0.01</size></box></geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Gray</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Central white path line (horizontal) -->
+    <model name="central_line">
+      <static>true</static>
+      <!-- Positioned midway -->
+      <pose>9 6.4 0.01 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <!-- Box dimensions: length (X), width (Y), height (Z) -->
+          <geometry><box><size>14.5 0.2 0.02</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <!-- Box dimensions: length (X), width (Y), height (Z) -->
+          <geometry><box><size>14.5 0.2 0.02</size></box></geometry>
+          <material>
+            <!-- White line -->
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Center line from T3 to T4 -->
+    <model name="center_line_T3_T4">
+      <static>true</static>
+      <!-- Positioned midway between T3 and T4 -->
+      <pose>10.5 6.4 0.01 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <!-- Box dimensions: width (X), length (Y), height (Z) -->
+            <box><size>0.2 6.4 0.02</size></box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <!-- Box dimensions: width (X), length (Y), height (Z) -->
+            <box><size>0.2 6.4 0.02</size></box>
+          </geometry>
+          <material>
+            <!-- White line -->
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Home landing pads (aligned along X axis) -->
+    <include>
+      <uri>model://home_marker</uri>
+      <name>home_left</name>
+      <pose>1.6 6.4 0.05 0 0 -1.57079633</pose>
+    </include>
+
+    <include>
+      <uri>model://home_marker</uri>
+      <name>home_right</name>
+      <pose>16.4 6.4 0.05 0 0 -1.57079633</pose>
+    </include>
+
+    <!-- Targets -->
+    <model name="target_T1">
+      <static>true</static>
+      <pose>6.5 6.4 0.05 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><cylinder><radius>0.5</radius><length>0.1</length></cylinder></geometry>
+          <material><ambient>0.98 1.0 0.22 1</ambient><diffuse>0.98 1.0 0.22 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="target_T2">
+      <static>true</static>
+      <pose>10.5 6.4 0.05 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><cylinder><radius>0.5</radius><length>0.1</length></cylinder></geometry>
+          <material><ambient>0.98 1.0 0.22 1</ambient><diffuse>0.98 1.0 0.22 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="target_T3">
+      <static>true</static>
+      <pose>10.5 3.2 0.05 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><cylinder><radius>0.25</radius><length>0.1</length></cylinder></geometry>
+          <material><ambient>0.99 0.16 0.11 1</ambient><diffuse>0.99 0.16 0.11 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="target_T4">
+      <static>true</static>
+      <pose>10.5 9.6 0.05 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><cylinder><radius>0.25</radius><length>0.1</length></cylinder></geometry>
+          <material><ambient>0.99 0.16 0.11 1</ambient><diffuse>0.99 0.16 0.11 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="target_T5">
+      <static>true</static>
+      <pose>14.5 6.4 0.05 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><cylinder><radius>0.25</radius><length>0.1</length></cylinder></geometry>
+          <material><ambient>0.1 0.1 1 1</ambient><diffuse>0.1 0.1 1 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Ring R1 using ring_1_8 model -->
+    <include>
+      <uri>model://ring_1_8</uri>
+      <name>ring_R1</name>
+      <pose>15.5 9.6 0 1.57079633 0 1.5708</pose>
+    </include>
+
+    <!-- Ring R2 using ring_1_5 model -->
+    <include>
+      <uri>model://ring_1_5</uri>
+      <name>ring_R2</name>
+      <pose>8.5 3.2 0 1.57079633 0 1.5708</pose>
+    </include>
+
+    <!-- Ring R3 using ring_1_8 model -->
+    <include>
+      <uri>model://ring_1_8</uri>
+      <name>ring_R3</name>
+      <pose>2.0 9.6 0 1.57079633 0 1.5708</pose>
+    </include>
+
+    <!-- ROS 2 integration plugins -->
+    <plugin name="gazebo_ros" filename="libgazebo_ros_init.so">
+      <ros><namespace>/gazebo</namespace></ros>
+    </plugin>
+
+    <plugin name="factory" filename="libgazebo_ros_factory.so"/>
+  </world>
+</sdf>
