@@ -1,0 +1,109 @@
+<sdf version="1.7">
+  <world name="drone_delivery_field">
+
+    <!-- Add sunlight to the world -->
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <!-- Main green field (18m x 12m) -->
+    <model name="main_field">
+      <static>true</static>
+      <pose>9 6 0.005 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry><box><size>18 12 0.01</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <geometry><box><size>18 12 0.01</size></box></geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Gray</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Central white path line (horizontal) -->
+    <model name="central_line">
+      <static>true</static>
+      <!-- Positioned midway -->
+      <pose>9 6.4 0.01 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <!-- Box dimensions: length (X), width (Y), height (Z) -->
+          <geometry><box><size>14.5 0.2 0.02</size></box></geometry>
+        </collision>
+        <visual name="visual">
+          <!-- Box dimensions: length (X), width (Y), height (Z) -->
+          <geometry><box><size>14.5 0.2 0.02</size></box></geometry>
+          <material>
+            <!-- White line -->
+            <ambient>1 1 1 1</ambient>
+            <diffuse>1 1 1 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Home landing pads (aligned along X axis) -->
+    <include>
+      <uri>model://home_marker</uri>
+      <name>home_left</name>
+      <pose>1.6 6.4 0.05 0 0 -1.57079633</pose>
+    </include>
+
+    <include>
+      <uri>model://home_marker</uri>
+      <name>home_right</name>
+      <pose>16.4 6.4 0.05 0 0 -1.57079633</pose>
+    </include>
+
+    <!-- Center target (T2) -->
+    <model name="target_T2">
+      <static>true</static>
+      <pose>10.5 6.4 0.05 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry>
+            <cylinder>
+              <radius>0.5</radius>
+              <length>0.1</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.98 1.0 0.22 1</ambient>
+            <diffuse>0.98 1.0 0.22 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Right ring (R1) -->
+    <include>
+      <uri>model://ring_1_5</uri>
+      <name>ring_R1</name>
+      <pose>5.0 8.4 0 1.57079633 0 1.5708</pose>
+    </include>
+
+    <!-- Left ring (R3) -->
+    <include>
+      <uri>model://ring_1_5</uri>
+      <name>ring_R3</name>
+      <pose>12.5 4.4 0 1.57079633 0 1.5708</pose>
+    </include>
+
+    <!-- Enable ROS 2 integration -->
+    <plugin name="gazebo_ros" filename="libgazebo_ros_init.so">
+      <ros>
+        <namespace>/gazebo</namespace>
+      </ros>
+    </plugin>
+
+    <!-- Enable Gazebo factory plugin for model spawning -->
+    <plugin name="factory" filename="libgazebo_ros_factory.so"/>
+
+  </world>
+</sdf>

@@ -1,6 +1,6 @@
-<!-- DO NOT EDIT: Generated from iris.sdf.jinja -->
+<!-- DO NOT EDIT: Generated from islab.sdf.jinja -->
 <sdf version='1.6'>
-  <model name='iris'>
+  <model name='islab'>
     <link name='base_link'>
       <pose>0 0 0 0 0 0</pose>
       <inertial>
@@ -39,7 +39,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>model://iris/meshes/iris.stl</uri>
+            <uri>model://islab/meshes/islab.stl</uri>
           </mesh>
         </geometry>
         <material>
@@ -121,7 +121,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>model://iris/meshes/iris_prop_ccw.dae</uri>
+            <uri>model://islab/meshes/islab_prop_ccw.dae</uri>
           </mesh>
         </geometry>
         <material>
@@ -186,7 +186,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>model://iris/meshes/iris_prop_ccw.dae</uri>
+            <uri>model://islab/meshes/islab_prop_ccw.dae</uri>
           </mesh>
         </geometry>
         <material>
@@ -251,7 +251,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>model://iris/meshes/iris_prop_cw.dae</uri>
+            <uri>model://islab/meshes/islab_prop_cw.dae</uri>
           </mesh>
         </geometry>
         <material>
@@ -316,7 +316,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>model://iris/meshes/iris_prop_cw.dae</uri>
+            <uri>model://islab/meshes/islab_prop_cw.dae</uri>
           </mesh>
         </geometry>
         <material>
@@ -427,6 +427,7 @@
       <child>gps0::link</child>
       <parent>base_link</parent>
     </joint>
+
     <plugin name="model_pose_broadcaster" filename="libgazebo_ros_p3d.so">
       <ros>
         <namespace>/UAV</namespace>
@@ -458,16 +459,16 @@
       <magSubTopic>/mag</magSubTopic>
       <baroSubTopic>/baro</baroSubTopic>
       <mavlink_addr>INADDR_ANY</mavlink_addr>
-      <mavlink_tcp_port>{{ mavlink_tcp_port }}</mavlink_tcp_port>
-      <mavlink_udp_port>{{ mavlink_udp_port }}</mavlink_udp_port>
-      <serialEnabled>{{ serial_enabled }}</serialEnabled>
-      <serialDevice>{{ serial_device }}</serialDevice>
-      <baudRate>{{ serial_baudrate }}</baudRate>
+      <mavlink_tcp_port>4560</mavlink_tcp_port>
+      <mavlink_udp_port>14560</mavlink_udp_port>
+      <serialEnabled>0</serialEnabled>
+      <serialDevice>/dev/ttyACM0</serialDevice>
+      <baudRate>921600</baudRate>
       <qgc_addr>INADDR_ANY</qgc_addr>
       <qgc_udp_port>14550</qgc_udp_port>
       <sdk_addr>INADDR_ANY</sdk_addr>
       <sdk_udp_port>14540</sdk_udp_port>
-      <hil_mode>{{ hil_mode }}</hil_mode>
+      <hil_mode>0</hil_mode>
       <hil_state_level>0</hil_state_level>
       <send_vision_estimation>0</send_vision_estimation>
       <send_odometry>1</send_odometry>

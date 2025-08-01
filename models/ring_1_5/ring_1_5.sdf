@@ -3,6 +3,8 @@
   <model name="ring_1_5">
     <static>true</static>
     <link name="ring_link">
+
+      <!-- Visible ring mesh -->
       <visual name="visual">
         <pose>0 0 0 0 0 0</pose>
         <geometry>
@@ -12,20 +14,48 @@
           </mesh>
         </geometry>
         <material>
-          <ambient>0.8 0.2 0.2 1</ambient>
-          <diffuse>1.0 0.2 0.2 1</diffuse>
+          <ambient>0.2 0.8 0.2 1</ambient>
+          <diffuse>0.2 1.0 0.2 1</diffuse>
         </material>
       </visual>
 
+      <!-- Virtual collision zone (small cylinder in center, no physics) -->
       <collision name="collision">
+        <pose>0 0 0 0 0 0</pose>
         <geometry>
-          <mesh>
-            <uri>model://ring_1_5/meshes/ring_1_5.STL</uri>
-            <scale>0.001 0.001 0.001</scale>
-          </mesh>
+          <cylinder>
+            <radius>0.1</radius>     <!-- 20 cm wide -->
+            <length>0.05</length>    <!-- 5 cm thick -->
+          </cylinder>
         </geometry>
+        <surface>
+          <contact>
+            <collide_bitmask>0</collide_bitmask> <!-- Disable physical collision -->
+          </contact>
+          <bounce>
+            <restitution_coefficient>0.0</restitution_coefficient>
+          </bounce>
+          <friction>
+            <ode>
+              <mu>0.0</mu>
+              <mu2>0.0</mu2>
+            </ode>
+          </friction>
+        </surface>
       </collision>
+
+      <!-- Contact sensor to detect when drone enters the virtual zone -->
+      <sensor name="ring_contact_sensor" type="contact">
+        <always_on>true</always_on>
+        <update_rate>50</update_rate>
+        <contact>
+          <collision>collision</collision>
+        </contact>
+        <plugin name="gazebo_ros_contact" filename="libgazebo_ros_contact.so">
+          <ros_topic>/ring_1_5/contact</ros_topic>
+        </plugin>
+      </sensor>
+
     </link>
   </model>
 </sdf>
-
