@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <model name="home_marker_H1">
+    <static>true</static>
+    <link name="link">
+      <pose>0 0 0 0 0 0</pose>
+
+      <!-- Collision geometry -->
+      <collision name="collision">
+        <geometry>
+          <plane>
+            <normal>0 0 1</normal>
+            <size>1.2 1.2</size>
+          </plane>
+        </geometry>
+      </collision>
+
+      <!-- Visual appearance -->
+      <visual name="visual">
+        <geometry>
+          <plane>
+            <normal>0 0 1</normal>
+            <size>1.2 1.2</size>
+          </plane>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://home_marker_H1/materials/scripts</uri>
+            <uri>model://home_marker_H1/materials/textures</uri>
+            <name>home_marker_H1/material</name>
+          </script>
+        </material>
+      </visual>
+
+      <!-- Contact sensor publishing ROS2 ContactsState -->
+      <sensor name="contact_sensor_H1" type="contact">
+        <always_on>true</always_on>
+        <update_rate>100</update_rate>
+        <contact>
+          <!-- Reference the collision by its name -->
+          <collision>collision</collision>
+        </contact>
+
+        <!-- ROS bumper plugin inside the sensor -->
+        <plugin name="gazebo_ros_bumper_home_H1" filename="libgazebo_ros_bumper.so">
+          <ros>
+            <namespace>/islab</namespace>
+            <remapping>bumper_states:=home/H1/contacts</remapping>
+          </ros>
+        </plugin>
+      </sensor>
+
+    </link>
+  </model>
+</sdf>

@@ -74,28 +74,70 @@
       </link>
     </model>
 
-    <!-- Home landing pads (aligned along X axis) -->
+    <!-- ========================= -->
+    <!-- HOME LANDING PADS WITH CONTACT SENSORS -->
+    <!-- ========================= -->
+
+    <!-- Home H1 landing pad -->
     <include>
-      <uri>model://home_marker</uri>
-      <name>home_left</name>
+      <uri>model://home_marker_H1</uri>
+      <name>home_H1</name>
       <pose>1.6 6.4 0.05 0 0 -1.57079633</pose>
     </include>
 
+    <!-- Home H2 landing pad -->
     <include>
-      <uri>model://home_marker</uri>
-      <name>home_right</name>
+      <uri>model://home_marker_H2</uri>
+      <name>home_H2</name>
       <pose>16.4 6.4 0.05 0 0 -1.57079633</pose>
     </include>
 
-    <!-- Targets -->
+    <!-- ========================= -->
+    <!-- TARGETS WITH CONTACT SENSOR -->
+    <!-- ========================= -->
+
     <model name="target_T1">
       <static>true</static>
       <pose>6.5 6.4 0.05 0 0 0</pose>
       <link name="link">
+
+        <!-- Visual appearance -->
         <visual name="visual">
-          <geometry><cylinder><radius>0.5</radius><length>0.1</length></cylinder></geometry>
-          <material><ambient>0.98 1.0 0.22 1</ambient><diffuse>0.98 1.0 0.22 1</diffuse></material>
+          <geometry>
+            <cylinder><radius>0.5</radius><length>0.1</length></cylinder>
+          </geometry>
+          <material>
+            <ambient>0.98 1.0 0.22 1</ambient>
+            <diffuse>0.98 1.0 0.22 1</diffuse>
+          </material>
         </visual>
+
+        <!-- Collision geometry -->
+        <collision name="collision">
+          <geometry>
+            <cylinder><radius>0.5</radius><length>0.1</length></cylinder>
+          </geometry>
+          <surface>
+            <contact><ode/></contact>
+            <bounce/><friction/>
+          </surface>
+        </collision>
+
+        <!-- Contact sensor publishing ROS2 ContactsState -->
+        <sensor name="contact_sensor_T1" type="contact">
+          <always_on>true</always_on>
+          <update_rate>100</update_rate>
+          <contact>
+            <collision>collision</collision>
+          </contact>
+          <plugin name="gazebo_ros_bumper_T1" filename="libgazebo_ros_bumper.so">
+            <ros>
+              <namespace>/islab</namespace>
+              <remapping>bumper_states:=targets/T1/contacts</remapping>
+            </ros>
+          </plugin>
+        </sensor>
+
       </link>
     </model>
 
@@ -107,6 +149,21 @@
           <geometry><cylinder><radius>0.5</radius><length>0.1</length></cylinder></geometry>
           <material><ambient>0.98 1.0 0.22 1</ambient><diffuse>0.98 1.0 0.22 1</diffuse></material>
         </visual>
+        <collision name="collision">
+          <geometry><cylinder><radius>0.5</radius><length>0.1</length></cylinder></geometry>
+          <surface><contact><ode/></contact><bounce/><friction/></surface>
+        </collision>
+        <sensor name="contact_sensor_T2" type="contact">
+          <always_on>true</always_on>
+          <update_rate>100</update_rate>
+          <contact><collision>collision</collision></contact>
+          <plugin name="gazebo_ros_bumper_T2" filename="libgazebo_ros_bumper.so">
+            <ros>
+              <namespace>/islab</namespace>
+              <remapping>bumper_states:=targets/T2/contacts</remapping>
+            </ros>
+          </plugin>
+        </sensor>
       </link>
     </model>
 
@@ -118,6 +175,21 @@
           <geometry><cylinder><radius>0.25</radius><length>0.1</length></cylinder></geometry>
           <material><ambient>0.99 0.16 0.11 1</ambient><diffuse>0.99 0.16 0.11 1</diffuse></material>
         </visual>
+        <collision name="collision">
+          <geometry><cylinder><radius>0.25</radius><length>0.1</length></cylinder></geometry>
+          <surface><contact><ode/></contact><bounce/><friction/></surface>
+        </collision>
+        <sensor name="contact_sensor_T3" type="contact">
+          <always_on>true</always_on>
+          <update_rate>100</update_rate>
+          <contact><collision>collision</collision></contact>
+          <plugin name="gazebo_ros_bumper_T3" filename="libgazebo_ros_bumper.so">
+            <ros>
+              <namespace>/islab</namespace>
+              <remapping>bumper_states:=targets/T3/contacts</remapping>
+            </ros>
+          </plugin>
+        </sensor>
       </link>
     </model>
 
@@ -129,6 +201,21 @@
           <geometry><cylinder><radius>0.25</radius><length>0.1</length></cylinder></geometry>
           <material><ambient>0.99 0.16 0.11 1</ambient><diffuse>0.99 0.16 0.11 1</diffuse></material>
         </visual>
+        <collision name="collision">
+          <geometry><cylinder><radius>0.25</radius><length>0.1</length></cylinder></geometry>
+          <surface><contact><ode/></contact><bounce/><friction/></surface>
+        </collision>
+        <sensor name="contact_sensor_T4" type="contact">
+          <always_on>true</always_on>
+          <update_rate>100</update_rate>
+          <contact><collision>collision</collision></contact>
+          <plugin name="gazebo_ros_bumper_T4" filename="libgazebo_ros_bumper.so">
+            <ros>
+              <namespace>/islab</namespace>
+              <remapping>bumper_states:=targets/T4/contacts</remapping>
+            </ros>
+          </plugin>
+        </sensor>
       </link>
     </model>
 
@@ -140,6 +227,21 @@
           <geometry><cylinder><radius>0.25</radius><length>0.1</length></cylinder></geometry>
           <material><ambient>0.1 0.1 1 1</ambient><diffuse>0.1 0.1 1 1</diffuse></material>
         </visual>
+        <collision name="collision">
+          <geometry><cylinder><radius>0.25</radius><length>0.1</length></cylinder></geometry>
+          <surface><contact><ode/></contact><bounce/><friction/></surface>
+        </collision>
+        <sensor name="contact_sensor_T5" type="contact">
+          <always_on>true</always_on>
+          <update_rate>100</update_rate>
+          <contact><collision>collision</collision></contact>
+          <plugin name="gazebo_ros_bumper_T5" filename="libgazebo_ros_bumper.so">
+            <ros>
+              <namespace>/islab</namespace>
+              <remapping>bumper_states:=targets/T5/contacts</remapping>
+            </ros>
+          </plugin>
+        </sensor>
       </link>
     </model>
 

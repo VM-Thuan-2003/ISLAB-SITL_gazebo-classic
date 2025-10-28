@@ -1,0 +1,13 @@
+material home_marker_H1/material
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture home_marker_H1.png
+      }
+    }
+  }
+}
