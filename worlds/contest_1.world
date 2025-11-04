@@ -1,46 +1,33 @@
 <?xml version="1.0" ?>
 <sdf version="1.7">
   <!--
-    World: drone_delivery_field
-    Coordinate System:
-      - Pose format: x y z roll pitch yaw  (SI units; angles in radians)
-      - +X: to the right, +Y: forward (as placed), +Z: up
-    Notes:
-      - T1..T5 targets are positioned so that the sequence starts from H2 side (right) toward H1 side (left).
-      - We keep model names and ROS remappings intact; only positions are changed where needed.
+    World: drone_delivery_field (centered at origin)
+    Coordinate frame:
+      +X → right
+      +Y → forward
+      +Z → up
+    Layout based on Drone Delivery field diagram.
+    H2: left side, H1: right side.
+    Main field centered at (0,0,0).
   -->
   <world name="drone_delivery_field">
 
-    <!-- Sun light source -->
-    <include>
-      <uri>model://sun</uri>
-    </include>
+    <!-- Sunlight -->
+    <include><uri>model://sun</uri></include>
 
     <!-- =========================
          MAIN FIELD & LINES
          ========================= -->
 
-    <!-- Main ground field (18m x 12m), centered by pose at (9, 6) -->
+    <!-- Main field (18m x 12m), centered at origin -->
     <model name="main_field">
       <static>true</static>
-      <!-- Slightly above z=0 to avoid z-fighting with floor -->
-      <pose>9 6 0.005 0 0 0</pose>
+      <pose>0 0 0.005 0 0 0</pose>
       <link name="link">
-        <collision name="collision">
-          <geometry>
-            <box>
-              <size>18 12 0.01</size>
-            </box>
-          </geometry>
-        </collision>
+        <collision name="collision"><geometry><box><size>18 12 0.01</size></box></geometry></collision>
         <visual name="visual">
-          <geometry>
-            <box>
-              <size>18 12 0.01</size>
-            </box>
-          </geometry>
+          <geometry><box><size>18 12 0.01</size></box></geometry>
           <material>
-            <!-- Use Gazebo built-in gray material -->
             <script>
               <uri>file://media/materials/scripts/gazebo.material</uri>
               <name>Gazebo/Gray</name>
@@ -50,58 +37,28 @@
       </link>
     </model>
 
-    <!-- Central white path line (horizontal along X) -->
+    <!-- Center horizontal white line -->
     <model name="central_line">
       <static>true</static>
-      <!-- Slightly above the field to avoid z-fighting -->
-      <pose>9 6.4 0.01 0 0 0</pose>
+      <pose>0 0 0.01 0 0 0</pose>
       <link name="link">
-        <collision name="collision">
-          <!-- Box: length (X), width (Y), height (Z) -->
-          <geometry>
-            <box>
-              <size>14.5 0.2 0.02</size>
-            </box>
-          </geometry>
-        </collision>
+        <collision name="collision"><geometry><box><size>14.5 0.2 0.02</size></box></geometry></collision>
         <visual name="visual">
-          <geometry>
-            <box>
-              <size>14.5 0.2 0.02</size>
-            </box>
-          </geometry>
-          <material>
-            <!-- White line -->
-            <ambient>1 1 1 1</ambient>
-            <diffuse>1 1 1 1</diffuse>
-          </material>
+          <geometry><box><size>14.5 0.2 0.02</size></box></geometry>
+          <material><ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse></material>
         </visual>
       </link>
     </model>
 
-    <!-- Vertical center line between T3 and T4 -->
+    <!-- Center vertical white line -->
     <model name="center_line_T3_T4">
       <static>true</static>
-      <pose>10.5 6.4 0.01 0 0 0</pose>
+      <pose>0 0 0.01 0 0 0</pose>
       <link name="link">
-        <collision name="collision">
-          <!-- Box: width (X), length (Y), height (Z) -->
-          <geometry>
-            <box>
-              <size>0.2 6.4 0.02</size>
-            </box>
-          </geometry>
-        </collision>
+        <collision name="collision"><geometry><box><size>0.2 6.4 0.02</size></box></geometry></collision>
         <visual name="visual">
-          <geometry>
-            <box>
-              <size>0.2 6.4 0.02</size>
-            </box>
-          </geometry>
-          <material>
-            <ambient>1 1 1 1</ambient>
-            <diffuse>1 1 1 1</diffuse>
-          </material>
+          <geometry><box><size>0.2 6.4 0.02</size></box></geometry>
+          <material><ambient>1 1 1 1</ambient><diffuse>1 1 1 1</diffuse></material>
         </visual>
       </link>
     </model>
@@ -110,294 +67,149 @@
          HOME LANDING PADS
          ========================= -->
 
-    <!-- Home H1 pad (left side) -->
-    <include>
-      <uri>model://home_marker_H1</uri>
-      <name>home_H1</name>
-      <!-- Yaw = -pi/2 (i.e., -1.57079633) -->
-      <pose>1.6 6.4 0.05 0 0 -1.57079633</pose>
-    </include>
-
-    <!-- Home H2 pad (right side) -->
+    <!-- Home H2 pad (left side) -->
     <include>
       <uri>model://home_marker_H2</uri>
       <name>home_H2</name>
-      <!-- Yaw = -pi/2 (i.e., -1.57079633) -->
-      <pose>16.4 6.4 0.05 0 0 -1.57079633</pose>
+      <pose>-7.4 0 0.05 0 0 -1.57079633</pose>
     </include>
 
+    <!-- Home H1 pad (right side) -->
+    <include>
+      <uri>model://home_marker_H1</uri>
+      <name>home_H1</name>
+      <pose>7.4 0 0.05 0 0 -1.57079633</pose>
+    </include>
+
+    <!-- Gray connection bar between H2 and T1 -->
+    <model name="handoff_link">
+      <static>true</static>
+      <pose>-5.95 0 0.01 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>2.9 0.2 0.02</size></box></geometry></collision>
+        <visual name="visual">
+          <geometry><box><size>2.9 0.2 0.02</size></box></geometry>
+          <material><ambient>0.7 0.7 0.7 1</ambient><diffuse>0.7 0.7 0.7 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
     <!-- =========================
-         TARGETS (WITH CONTACT SENSORS)
-         Reordered so the run starts near H2 (right) and ends near H1 (left):
-         - T1: near H2       (x=14.5)
-         - T2: mid (center)  (x=10.5, y=6.4)
-         - T3: upper center  (x=10.5, y=9.6)
-         - T4: lower center  (x=10.5, y=3.2)
-         - T5: near H1       (x=6.5)
+         TARGETS (CONTACT AREAS)
          ========================= -->
 
-    <!-- Target T1 (near H2, large yellow disc) -->
+    <!-- Target T1: Left side near H2 (large yellow) -->
     <model name="target_T1">
       <static>true</static>
-      <pose>14.5 6.4 0.05 0 0 0</pose>
+      <pose>-4.5 0 0.05 0 0 0</pose>
       <link name="link">
-        <!-- Visual (cylinder: r=0.5, h=0.1) -->
-        <visual name="visual">
-          <geometry>
-            <cylinder>
-              <radius>0.5</radius>
-              <length>0.1</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <ambient>0.98 1.0 0.22 1</ambient>
-            <diffuse>0.98 1.0 0.22 1</diffuse>
-          </material>
-        </visual>
-
-        <!-- Collision -->
-        <collision name="collision">
-          <geometry>
-            <cylinder>
-              <radius>0.5</radius>
-              <length>0.1</length>
-            </cylinder>
-          </geometry>
-          <surface>
-            <contact><ode/></contact>
-            <bounce/><friction/>
-          </surface>
-        </collision>
-
-        <!-- Contact sensor (ROS 2 bumper -> /islab/targets/T1/contacts) -->
-        <sensor name="contact_sensor_T1" type="contact">
-          <always_on>true</always_on>
-          <update_rate>100</update_rate>
-          <contact>
-            <collision>collision</collision>
-          </contact>
-          <plugin name="gazebo_ros_bumper_T1" filename="libgazebo_ros_bumper.so">
-            <ros>
-              <namespace>/islab</namespace>
-              <remapping>bumper_states:=targets/T1/contacts</remapping>
-            </ros>
-          </plugin>
+        <visual name="visual"><geometry><cylinder><radius>0.5</radius><length>0.1</length></cylinder></geometry><material><ambient>0.98 1.0 0.22 1</ambient><diffuse>0.98 1.0 0.22 1</diffuse></material></visual>
+        <collision name="collision"><geometry><cylinder><radius>0.5</radius><length>0.1</length></cylinder></geometry></collision>
+        <sensor name="contact_sensor_T1" type="contact"><always_on>true</always_on><update_rate>100</update_rate>
+          <contact><collision>collision</collision></contact>
+          <plugin name="gazebo_ros_bumper_T1" filename="libgazebo_ros_bumper.so"><ros><namespace>/islab</namespace><remapping>bumper_states:=targets/T1/contacts</remapping></ros></plugin>
         </sensor>
-
       </link>
     </model>
 
-    <!-- Target T2 (center line, yellow large disc) -->
+    <!-- Target T2: Center (large yellow) -->
     <model name="target_T2">
       <static>true</static>
-      <pose>10.5 6.4 0.05 0 0 0</pose>
+      <pose>0 0 0.05 0 0 0</pose>
       <link name="link">
-        <visual name="visual">
-          <geometry>
-            <cylinder>
-              <radius>0.5</radius>
-              <length>0.1</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <ambient>0.98 1.0 0.22 1</ambient>
-            <diffuse>0.98 1.0 0.22 1</diffuse>
-          </material>
-        </visual>
-        <collision name="collision">
-          <geometry>
-            <cylinder>
-              <radius>0.5</radius>
-              <length>0.1</length>
-            </cylinder>
-          </geometry>
-          <surface>
-            <contact><ode/></contact>
-            <bounce/><friction/>
-          </surface>
-        </collision>
-        <sensor name="contact_sensor_T2" type="contact">
-          <always_on>true</always_on>
-          <update_rate>100</update_rate>
+        <visual name="visual"><geometry><cylinder><radius>0.5</radius><length>0.1</length></cylinder></geometry><material><ambient>0.98 1.0 0.22 1</ambient><diffuse>0.98 1.0 0.22 1</diffuse></material></visual>
+        <collision name="collision"><geometry><cylinder><radius>0.5</radius><length>0.1</length></cylinder></geometry></collision>
+        <sensor name="contact_sensor_T2" type="contact"><always_on>true</always_on><update_rate>100</update_rate>
           <contact><collision>collision</collision></contact>
-          <plugin name="gazebo_ros_bumper_T2" filename="libgazebo_ros_bumper.so">
-            <ros>
-              <namespace>/islab</namespace>
-              <remapping>bumper_states:=targets/T2/contacts</remapping>
-            </ros>
-          </plugin>
+          <plugin name="gazebo_ros_bumper_T2" filename="libgazebo_ros_bumper.so"><ros><namespace>/islab</namespace><remapping>bumper_states:=targets/T2/contacts</remapping></ros></plugin>
         </sensor>
       </link>
     </model>
 
-    <!-- Target T3 (upper center, small red disc) -->
+    <!-- Target T3: Below center (small red) -->
     <model name="target_T3">
       <static>true</static>
-      <pose>10.5 9.6 0.05 0 0 0</pose>
+      <pose>0 -3.2 0.05 0 0 0</pose>
       <link name="link">
-        <visual name="visual">
-          <geometry>
-            <cylinder>
-              <radius>0.25</radius>
-              <length>0.1</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <ambient>0.99 0.16 0.11 1</ambient>
-            <diffuse>0.99 0.16 0.11 1</diffuse>
-          </material>
-        </visual>
-        <collision name="collision">
-          <geometry>
-            <cylinder>
-              <radius>0.25</radius>
-              <length>0.1</length>
-            </cylinder>
-          </geometry>
-          <surface>
-            <contact><ode/></contact>
-            <bounce/><friction/>
-          </surface>
-        </collision>
-        <sensor name="contact_sensor_T3" type="contact">
-          <always_on>true</always_on>
-          <update_rate>100</update_rate>
+        <visual name="visual"><geometry><cylinder><radius>0.25</radius><length>0.1</length></cylinder></geometry><material><ambient>0.99 0.16 0.11 1</ambient><diffuse>0.99 0.16 0.11 1</diffuse></material></visual>
+        <collision name="collision"><geometry><cylinder><radius>0.25</radius><length>0.1</length></cylinder></geometry></collision>
+        <sensor name="contact_sensor_T3" type="contact"><always_on>true</always_on><update_rate>100</update_rate>
           <contact><collision>collision</collision></contact>
-          <plugin name="gazebo_ros_bumper_T3" filename="libgazebo_ros_bumper.so">
-            <ros>
-              <namespace>/islab</namespace>
-              <remapping>bumper_states:=targets/T3/contacts</remapping>
-            </ros>
-          </plugin>
+          <plugin name="gazebo_ros_bumper_T3" filename="libgazebo_ros_bumper.so"><ros><namespace>/islab</namespace><remapping>bumper_states:=targets/T3/contacts</remapping></ros></plugin>
         </sensor>
       </link>
     </model>
 
-    <!-- Target T4 (lower center, small red disc) -->
+    <!-- Target T4: Above center (small red) -->
     <model name="target_T4">
       <static>true</static>
-      <pose>10.5 3.2 0.05 0 0 0</pose>
+      <pose>0 3.2 0.05 0 0 0</pose>
       <link name="link">
-        <visual name="visual">
-          <geometry>
-            <cylinder>
-              <radius>0.25</radius>
-              <length>0.1</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <ambient>0.99 0.16 0.11 1</ambient>
-            <diffuse>0.99 0.16 0.11 1</diffuse>
-          </material>
-        </visual>
-        <collision name="collision">
-          <geometry>
-            <cylinder>
-              <radius>0.25</radius>
-              <length>0.1</length>
-            </cylinder>
-          </geometry>
-          <surface>
-            <contact><ode/></contact>
-            <bounce/><friction/>
-          </surface>
-        </collision>
-        <sensor name="contact_sensor_T4" type="contact">
-          <always_on>true</always_on>
-          <update_rate>100</update_rate>
+        <visual name="visual"><geometry><cylinder><radius>0.25</radius><length>0.1</length></cylinder></geometry><material><ambient>0.99 0.16 0.11 1</ambient><diffuse>0.99 0.16 0.11 1</diffuse></material></visual>
+        <collision name="collision"><geometry><cylinder><radius>0.25</radius><length>0.1</length></cylinder></geometry></collision>
+        <sensor name="contact_sensor_T4" type="contact"><always_on>true</always_on><update_rate>100</update_rate>
           <contact><collision>collision</collision></contact>
-          <plugin name="gazebo_ros_bumper_T4" filename="libgazebo_ros_bumper.so">
-            <ros>
-              <namespace>/islab</namespace>
-              <remapping>bumper_states:=targets/T4/contacts</remapping>
-            </ros>
-          </plugin>
+          <plugin name="gazebo_ros_bumper_T4" filename="libgazebo_ros_bumper.so"><ros><namespace>/islab</namespace><remapping>bumper_states:=targets/T4/contacts</remapping></ros></plugin>
         </sensor>
       </link>
     </model>
 
-    <!-- Target T5 (near H1, small blue disc) -->
+    <!-- Target T5: Right side near H1 (small blue) -->
     <model name="target_T5">
       <static>true</static>
-      <pose>6.5 6.4 0.05 0 0 0</pose>
+      <pose>3.5 0 0.05 0 0 0</pose>
       <link name="link">
-        <visual name="visual">
-          <geometry>
-            <cylinder>
-              <radius>0.25</radius>
-              <length>0.1</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <ambient>0.1 0.1 1 1</ambient>
-            <diffuse>0.1 0.1 1 1</diffuse>
-          </material>
-        </visual>
-        <collision name="collision">
-          <geometry>
-            <cylinder>
-              <radius>0.25</radius>
-              <length>0.1</length>
-            </cylinder>
-          </geometry>
-          <surface>
-            <contact><ode/></contact>
-            <bounce/><friction/>
-          </surface>
-        </collision>
-        <sensor name="contact_sensor_T5" type="contact">
-          <always_on>true</always_on>
-          <update_rate>100</update_rate>
+        <visual name="visual"><geometry><cylinder><radius>0.25</radius><length>0.1</length></cylinder></geometry><material><ambient>0.1 0.1 1 1</ambient><diffuse>0.1 0.1 1 1</diffuse></material></visual>
+        <collision name="collision"><geometry><cylinder><radius>0.25</radius><length>0.1</length></cylinder></geometry></collision>
+        <sensor name="contact_sensor_T5" type="contact"><always_on>true</always_on><update_rate>100</update_rate>
           <contact><collision>collision</collision></contact>
-          <plugin name="gazebo_ros_bumper_T5" filename="libgazebo_ros_bumper.so">
-            <ros>
-              <namespace>/islab</namespace>
-              <remapping>bumper_states:=targets/T5/contacts</remapping>
-            </ros>
-          </plugin>
+          <plugin name="gazebo_ros_bumper_T5" filename="libgazebo_ros_bumper.so"><ros><namespace>/islab</namespace><remapping>bumper_states:=targets/T5/contacts</remapping></ros></plugin>
         </sensor>
       </link>
     </model>
 
     <!-- =========================
-         RINGS (SCENIC/OBSTACLES)
+         RINGS (OBSTACLES)
          ========================= -->
 
-    <!-- Ring R1 (large) -->
-    <include>
-      <uri>model://ring_1_8</uri>
-      <name>ring_R1</name>
-      <!-- roll=pi/2, yaw≈pi/2 -->
-      <pose>15.5 9.6 0 1.57079633 0 1.5708</pose>
-    </include>
-
-    <!-- Ring R2 (medium) -->
-    <include>
-      <uri>model://ring_1_5</uri>
-      <name>ring_R2</name>
-      <!-- roll=pi/2, yaw≈pi/2 -->
-      <pose>8.5 3.2 0 1.57079633 0 1.5708</pose>
-    </include>
-
-    <!-- Ring R3 (large) -->
+    <!-- Ring R3: top-left corner -->
     <include>
       <uri>model://ring_1_8</uri>
       <name>ring_R3</name>
-      <!-- roll=pi/2, yaw≈pi/2 -->
-      <pose>2.0 9.6 0 1.57079633 0 1.5708</pose>
+      <pose>-6.5 3.2 0 1.57079633 0 1.5708</pose>
+    </include>
+
+    <!-- Ring R2: bottom-left -->
+    <include>
+      <uri>model://ring_1_5</uri>
+      <name>ring_R2</name>
+      <pose>-1.5 -3.2 0 1.57079633 0 1.5708</pose>
+    </include>
+
+    <!-- Ring R1: top-right -->
+    <include>
+      <uri>model://ring_1_8</uri>
+      <name>ring_R1</name>
+      <pose>1.8 3.2 0 1.57079633 0 1.5708</pose>
+    </include>
+    
+    <!-- =========================
+      THIRD-PERSON CAMERA (Top-Right View)
+      ========================= -->
+    <include>
+      <static>true</static>
+      <uri>model://overview_camera</uri>
+      <name>overview_camera</name>
+      <pose>10 -10 12 0 0.7 2.35619</pose>
     </include>
 
     <!-- =========================
          ROS 2 INTEGRATION
          ========================= -->
     <plugin name="gazebo_ros" filename="libgazebo_ros_init.so">
-      <ros>
-        <namespace>/gazebo</namespace>
-      </ros>
+      <ros><namespace>/gazebo</namespace></ros>
     </plugin>
 
     <plugin name="factory" filename="libgazebo_ros_factory.so"/>
   </world>
 </sdf>
-
-<!-- vim: set et ft=xml fenc=utf-8 ff=unix sts=0 sw=2 ts=2 : -->

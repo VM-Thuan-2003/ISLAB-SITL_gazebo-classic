@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <sdf version="1.6">
-  <model name="down_camera">
+  <model name="overview_camera">
     <link name="link">
       <pose>0 0 0 0 0 0</pose>
       <inertial>
@@ -29,15 +29,15 @@
           </script>
         </material>
       </visual>
-      <sensor name='down_camera' type='camera'>
+      <sensor name='overview_camera' type='camera'>
         <always_on>1</always_on>
         <visualize>1</visualize>
         <update_rate>120</update_rate>
         <camera>
           <horizontal_fov>1.047</horizontal_fov>
           <image>
-            <width>640</width>
-            <height>400</height>
+            <width>1280</width>
+            <height>720</height>
             <format>R8G8B8</format>
           </image>
           <clip>
@@ -50,15 +50,14 @@
             <stddev>0.005</stddev>
           </noise>
         </camera>
-        <plugin name='camera_down' filename='libgazebo_ros_camera.so'>
+        <plugin name='camera_overview' filename='libgazebo_ros_camera.so'>
           <ros>
             <namespace>/islab</namespace>
           </ros>
-          <frame_name>/islab/down_camera</frame_name>
-          <camera_name>down_camera</camera_name>
+          <frame_name>/islab/overview_camera</frame_name>
+          <camera_name>overview</camera_name>
           <hack_baseline>0.07</hack_baseline>
         </plugin>
-        <pose>0 0 0 0 1.57079 0</pose>
       </sensor>
     </link>
   </model>

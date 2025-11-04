@@ -52,10 +52,10 @@
         </camera>
         <plugin name='camera_forward' filename='libgazebo_ros_camera.so'>
           <ros>
-            <namespace>/UAV</namespace>
+            <namespace>/islab</namespace>
           </ros>
-          <frame_name>/UAV/forward_cam</frame_name>
-          <camera_name>forward</camera_name>
+          <frame_name>/islab/forward_camera</frame_name>
+          <camera_name>forward_camera</camera_name>
           <hack_baseline>0.07</hack_baseline>
         </plugin>
         <pose>0 0 0 0 0 0</pose>

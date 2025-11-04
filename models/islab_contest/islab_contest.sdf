@@ -2,7 +2,7 @@
   <model name='islab_contest'>
     <include>
       <uri>model://islab_camera</uri>
-      <pose>0.5 5.5 0 0 0 0</pose>
+      <pose>-8 -1 0 0 0 0</pose>
     </include>
   </model>
 </sdf>
